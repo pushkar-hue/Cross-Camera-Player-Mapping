@@ -25,7 +25,7 @@ For every frame, we construct a graph where nodes represent players. Instead of 
 * **Relative Directionality:** We encode the number of neighbors strictly to the left, right, above, and below each player.
 
 ### 2. Adaptive Graph Matching
-We treat the mapping problem as a **Linear Sum Assignment Problem** (solved via the Hungarian Algorithm). The cost function between a Broadcast Player ($P_b$) and a Tactical Player ($P_t$) is calculated dynamically:
+We treat the mapping problem as a **Linear Sum Assignment Problem**. The cost function between a Broadcast Player ($P_b$) and a Tactical Player ($P_t$) is calculated dynamically:
 * **Base Cost:** Weighted difference in ordinal ranks (X-rank differences are penalized more heavily than Y-rank differences).
 * **Topological Bonus:** If $P_b$'s neighbor is already matched to $P_t$'s neighbor, the cost is significantly reduced. This allows the algorithm to "grow" matches from confident pairs.
 * **Momentum:** The cost matrix includes a "momentum" term that favors maintaining the match from the previous frame.

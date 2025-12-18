@@ -77,19 +77,16 @@ class PerspectiveInvariantGraph:
             x_rank = x_ranks[i]  # 0 = leftmost, 1 = rightmost
             y_rank = y_ranks[i]  # 0 = topmost, 1 = bottommost
 
-            # 2. NEAREST NEIGHBOR IDENTITY
-            # Who are my k nearest neighbors? (order preserved under perspective)
+            # Who are my k nearest neighbors? 
             distances = dist_matrix[i].copy()
             distances[i] = np.inf
             nn_order = np.argsort(distances)[:min(5, self.n - 1)]
             nn_ids = [self.ids[j] for j in nn_order]
 
-            # 3. NEIGHBOR RANKS
             # What are the ordinal positions of my neighbors?
             nn_x_ranks = [x_ranks[j] for j in nn_order]
             nn_y_ranks = [y_ranks[j] for j in nn_order]
 
-            # 4. DIRECTIONAL NEIGHBORS
             # Who is to my left/right/above/below?
             left_neighbors = [self.ids[j] for j in range(self.n)
                              if self.positions[j, 0] < self.positions[i, 0]]
@@ -100,12 +97,10 @@ class PerspectiveInvariantGraph:
             below_neighbors = [self.ids[j] for j in range(self.n)
                               if self.positions[j, 1] > self.positions[i, 1]]
 
-            # 5. QUADRANT (robust to scale)
             centroid = np.mean(self.positions, axis=0)
             quadrant = (2 if self.positions[i, 0] > centroid[0] else 0) + \
                       (1 if self.positions[i, 1] > centroid[1] else 0)
 
-            # 6. RELATIVE POSITION SIGNATURE
             # Angle to each neighbor (somewhat preserved)
             angles_to_neighbors = []
             for j in nn_order[:3]:
@@ -113,7 +108,6 @@ class PerspectiveInvariantGraph:
                 dy = self.positions[j, 1] - self.positions[i, 1]
                 angles_to_neighbors.append(np.arctan2(dy, dx))
 
-            # 7. DISTANCE RANK SIGNATURE
             # Instead of actual distances, use distance ranks
             dist_ranks = np.zeros(self.n)
             sorted_dists = np.argsort(distances)

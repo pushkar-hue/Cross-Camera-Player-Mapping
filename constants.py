@@ -1,5 +1,3 @@
-"""Constants for Cross-Camera Player Mapping"""
-
 # Model and video paths
 MODEL_PATH = "yolov11_custom.pt"
 BROADCAST_VIDEO = "Assignment Materials/broadcast.mp4"

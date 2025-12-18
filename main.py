@@ -1,5 +1,3 @@
-"""Cross-Camera Player Mapping - Main Processing Script"""
-
 import cv2
 import numpy as np
 from tqdm import tqdm
